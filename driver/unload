@@ -1,0 +1,3 @@
+#!/bin/sh
+rmmod tc_pcie_driver
+rm /dev/tc_pcie_driver

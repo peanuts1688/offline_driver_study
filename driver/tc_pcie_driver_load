@@ -1,0 +1,21 @@
+#!/bin/sh
+module="tc_pcie_driver"
+device="tc_pcie_driver"
+mode="666"
+
+# load the module
+/sbin/insmod ./$module.ko $* || exit 1
+
+# remove stale nodes
+rm -f /dev/$device
+
+# create new device node
+major=`grep -w $module /proc/devices | sed 's/^ *//g' | cut -f1 -d" "`
+mknod /dev/$device c $major 0
+
+# change permissions to allow all users to read/write
+chmod $mode /dev/$device
+
+## make user program
+#rm -f ./user/user
+#gcc ./user/user.c -o ./user/user
