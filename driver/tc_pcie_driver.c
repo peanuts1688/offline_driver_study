@@ -366,31 +366,6 @@ static int __init tc_pcie_probe(struct pci_dev *dev, const struct pci_device_id 
 
   dev_info(&dev->dev, "tc_pcie_probe");
 
-//   //////////////////////////////////////////////////////////////////////////////
-//   // debug code begin
-//   //dev_info(&dev->dev, "VID = 0x%04x, Device = 0x%04x, Class = 0x%x, bus:slot.func = %02x:%02x.%02x",
-//   //dev->vendor, dev->device, dev->class, dev->bus->number, PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
-//   debug = kmalloc(100*sizeof(void*), GFP_KERNEL);
-//   for(cnt=0; cnt<100; cnt++)
-//   {
-//     debug[cnt] = kzalloc(TC_KMEM_LENGTH_BYTES, GFP_KERNEL);
-//     if (!debug[cnt]) break;
-//     dev_info(&dev->dev, "tc_pcie_MIK TEST: cnt=%d, sizeof(void*)=%d, addr=%lx"
-//         , cnt, (int)sizeof(void*), (long)debug[cnt]);
-//   }
-//   for(cnt=0; cnt<100; cnt++)
-//   {
-//     if (!debug[cnt]) break;
-//     kfree(debug[cnt]);
-//   }
-//   kfree(debug);
-//   // debug code end
-//   //////////////////////////////////////////////////////////////////////////////
-
-//    dev_info(&dev->dev, "VID = 0x%04x, Device = 0x%04x, Class = 0x%x, bus:slot.func = %02x:%02x.%02x",
-//    dev->vendor, dev->device, dev->class, dev->bus->number, PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
-//    dev_info(&dev->dev, "vid = 0x%04x, did = 0x%04x", vid, did);
-
   bk_ptr->pci_dev = dev;
   pci_set_drvdata(dev, bk_ptr);
   if(dev->vendor == vid && dev->device == did) {
@@ -398,7 +373,8 @@ static int __init tc_pcie_probe(struct pci_dev *dev, const struct pci_device_id 
     dev->vendor, dev->device, dev->class, dev->bus->number, PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
 
     rc = init_chrdev(bk_ptr);
-    if (rc) {
+    if (rc) 
+    {
       dev_err(&dev->dev, "init_chrdev() failed\n");
       goto err_initchrdev;
     }

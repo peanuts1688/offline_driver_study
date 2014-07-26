@@ -1,0 +1,14 @@
+# a comment - this is ignored
+
+# no .a(executable) file
+*.a
+
+# but do track lib.a, even though .a files are ignored
+!lib.a
+
+# ignore all files in the build/ directory
+build/
+
+# ignore all .txt files in the doc/ directory
+doc/**/*.txt
+
