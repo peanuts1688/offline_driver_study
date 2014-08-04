@@ -14,7 +14,7 @@ install git: $apt-get install git
 set up user, email, editor, diff tool ...: 
   $git config --system(or --global or no parameter for just the local) user.name "Jennifer Chang"
                                                                       user.email jchang@tensorcom
-                                                                      core.editor gvim(default) 
+                                                                      core.editor "gvim(default) -f"
                                                                       merge.tool meld
 ** FIXME $git config doesn't work without --global , how to resolve
 
@@ -219,7 +219,10 @@ show remotes: $git remote       # list only the shortnames of each remote handle
 
 fetching from remote: $git fetch <remote_shortname>
 
-**If you clone a repository, the command automatically adds that remote repository under the name origin. So, git fetch origin fetches any new work that has been pushed to that server since you cloned (or last fetched from) it. It’s important to note that the fetch command pulls the data to your local repository — it doesn’t automatically merge it with any of your work or modify what you’re currently working on. You have to merge it manually into your work when you’re ready.
+**If you clone a repository, the command automatically adds that remote repository under the name origin if no remote_shortname specified. "$git fetch
+<remote_shortname (ex.origin)> fetches any new work that has been pushed to
+that server since you cloned (or last fetched from) it. It's important to note
+that the fetch command pulls the data to your local repository — it doesns't automatically merge it with any of your work or modify what you're currently working on. You have to merge it manually into your work when you're ready.
 
 
 ********************************************************************************************************
@@ -227,8 +230,7 @@ fetching from remote: $git fetch <remote_shortname>
 
 pulling from remote: $git pull <remote_shortname>   
 
-**Running git pull generally fetches data from the server you originally
-cloned from and automatically tries to merge it into the code you're currently working on. 
+**Running git pull generally fetches data from the server you originally cloned from and automatically tries to merge it into the code you're currently working on. 
 **PULL = FETCH + merge
 
 
