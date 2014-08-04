@@ -1,0 +1,282 @@
+Git basics: anything that is committed in Git can almost always be recovered. Even commits that were on branches that were deleted or commits that were overwritten with an --amend commit can be recovered (see Chapter 9 for data recovery). However, anything you lose that was never committed is likely never to be seen again.
+
+
+========================================================================================================
+
+install all dependance: $apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev
+
+install git: $apt-get install git
+                              git-core
+
+
+========================================================================================================
+
+set up user, email, editor, diff tool ...: 
+  $git config --system(or --global or no parameter for just the local) user.name "Jennifer Chang"
+                                                                      user.email jchang@tensorcom
+                                                                      core.editor gvim(default) 
+                                                                      merge.tool meld
+** FIXME $git config doesn't work without --global , how to resolve
+
+========================================================================================================
+
+check settings: 
+  $git config --list
+  $git config user.name
+
+
+========================================================================================================
+
+start repository:
+
+  ==> new repository
+  
+  initialize: $git init
+                        --bare    # FIXME what is a bare???
+  
+  add: 
+    $git add  *
+              *.c
+              filename
+              --all
+              -A        # stages all
+              .         # stages new and modified, without deleted
+              -u        # stages new and modified, without deleted
+  
+  
+  commit: $git commit -m 'message to put in to commit'
+  
+  
+  ==> checking out from existing repository
+  
+  checkout: $git clone https://path[url] <local_directory>
+  
+  
+========================================================================================================
+
+checking status: $git status
+  untracked
+  unmodified
+  modified
+  staged  
+
+
+========================================================================================================
+
+unadd: $git reset HEAD <file>
+
+
+========================================================================================================
+
+check in changes(stage): $git add <file>
+
+
+========================================================================================================
+
+stage and commit: $git commit         #editor comes out for user to input commit messages
+                                -m 'commmit everything in the git folder?'
+                                -v () #explicit reminder of what has been modified
+                                -a    #this skips the staging(add) step and commit directly
+
+========================================================================================================
+
+ignoring files: $cat .gitignore
+
+
+========================================================================================================
+
+unadded changes: $git diff
+added changes: $git diff --cached
+
+
+========================================================================================================
+
+for files deleted, removing repository: $git rm <file>
+                                             rm \*~
+                                             rm /\*.log
+
+keep file but remove from repository: $git rm --cached <file>
+
+
+========================================================================================================
+
+moving files  : $git mv <file_from(file_name)> <file_to(file_rename)>
+equivalant to : $mv <file_name> <file_rename>
+                $git rm <fie_name>
+                $git add <file_rename>
+
+
+========================================================================================================
+
+commit history: $git log
+                         -p
+                         --stat
+                         --oneline
+                         --<n>
+
+                $git log --pretty=oneline
+                         --pretty=format:"%h - %an, %ar : %s"   #let user define what to output
+                         --pretty=format:"%h %s" --graph
+                         --since=2.weeks
+                         --since="2014-07-30"
+                         --since="2014-06"
+                         --author <user>
+                         --grep <keyword_in_comments>
+                         --all-match <keyword_in_comments>
+                $git log --after="2014-04-29 00:00:00" --before="2014-04-29 23:59:59" \
+                --pretty=fuller
+                $ git log  --after="2013-04-29T17:07:22+0200"      \
+                --before="2013-04-29T17:07:22+0200" --pretty=fuller
+
+
+http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History  
+%H  Comit hash
+%h	Abbreviated commit hash
+%T	Tree hash
+%t	Abbreviated tree hash
+%P	Parent hashes
+%p	Abbreviated parent hashes
+%an	Author name
+%ae	Author e-mail
+%ad	Author date (format respects the --date= option)
+%ar	Author date, relative
+%cn	Committer name
+%ce	Committer email
+%cd	Committer date
+%cr	Committer date, relative
+%s	Subject
+
+-p	            Show the patch introduced with each commit.
+--word-diff	    Show the patch in a word diff format.
+--stat	        Show statistics for files modified in each commit.
+--shortstat	    Display only the changed/insertions/deletions line from the --stat command.
+--name-only	    Show the list of files modified after the commit information.
+--name-status	  Show the list of files affected with added/modified/deleted information as well.
+--abbrev-commit	Show only the first few characters of the SHA-1 checksum instead of all 40.
+--relative-date	Display the date in a relative format (for example, “2 weeks ago”) instead of using the full date format.
+--graph	        Display an ASCII graph of the branch and merge history beside the log output.
+--pretty      	Show commits in an alternate format. Options include oneline, short, full, fuller, and format (where you specify your own format).
+--oneline	      A convenience option short for --pretty=oneline --abbrev-commit.
+
+-(n)	            Show only the last n commits
+--since, --after	Limit the commits to those whose CommitDate was made on-or-after the specified date/time.
+--until, --before	Limit the commits to those whose CommitDate was made on-or-before the specified date/time
+--author	        Only show commits in which the author entry matches the specified string.
+--committer	      Only show commits in which the committer entry matches the specified string.
+
+
+========================================================================================================
+
+
+redo commit: $git commit --amend  #takes the last "staged(added)" and commit again if no changes made between the time --amend and previous commit, commit message can be edit 
+  ex: $git commit -m 'initial commit'
+      $git add <forgotten_file>
+      $git commit --amend       # the commit editor will fire up and commit message can also be changed
+
+
+========================================================================================================
+
+
+unstage file: $git reset HEAD <file_to_unstage>
+
+
+========================================================================================================
+
+
+revert change to last commit: $git checkout -- <file>   #discard change since last commit
+
+
+========================================================================================================
+
+
+REMOTE:   #in the directory where a repository is desired
+create new repository:
+$touch README.md      # "touch"(not part of git, but is its own command-line program) updates the file's timestamp(if the file exits), or create an empty file with that name
+$git init             # to initialize an empty repository in "current directory" on "LOCAL COMPUTER"
+$git add README.md    # add file to current directory's repository on LOCAL COMPUTER
+$git commit -m "first commit"     # commit to repository on LOCAL COMPUTER
+$git remote add <shortname(ex.origin> https://github.com/peanuts1688/<new_repository>.git    #adds a new REMOTE repository (regardless of the current directory on local computer)
+**the word "origin" is used to indicate that it's the central Repo everyone is
+branching from, each person have it own repository, and they all branch from the "origin" refer to https://www.atlassian.com/git/tutorial/remote-repositories#!remote
+
+$git push -u <shortname(ex.origin)> <branch_name(ex.master)>    # pushes from LOCAL COMPUTER repository to REMOTE repository(there are two repositories, one on LOCAL COMPUTER the other on REMOTE site)
+
+push an existing repository(same as last two steps above, upload existing to remote):
+$git remote add <shortname(ex.origin> https://github.com/peanuts1688/personal.git
+$git push -u <shortname(ex.origin)> <branch_name(ex.master)>
+  ex. $git push remote_git :refs/tags/tag_name
+
+
+========================================================================================================
+
+
+show remotes: $git remote       # list only the shortnames of each remote handle specified
+                          -v    # expands all shortname(ex. origin), URL to every shortname
+
+
+========================================================================================================
+
+
+fetching from remote: $git fetch <remote_shortname>
+
+**If you clone a repository, the command automatically adds that remote repository under the name origin. So, git fetch origin fetches any new work that has been pushed to that server since you cloned (or last fetched from) it. It’s important to note that the fetch command pulls the data to your local repository — it doesn’t automatically merge it with any of your work or modify what you’re currently working on. You have to merge it manually into your work when you’re ready.
+
+
+********************************************************************************************************
+
+
+pulling from remote: $git pull <remote_shortname>   
+
+**Running git pull generally fetches data from the server you originally
+cloned from and automatically tries to merge it into the code you're currently working on. 
+**PULL = FETCH + merge
+
+
+********************************************************************************************************
+
+
+pushing to remote: $git push <remote shortname> <local branch_name>
+ex. cloning generally sets up both names automatically
+  $git push origin master
+
+
+********************************************************************************************************
+
+
+inspecting remote: $git remote show <remote_shortname>
+
+
+********************************************************************************************************
+
+
+renaming remote_shortname: $git remote rename <old_remote_shortname> <new_remote_shortname>
+
+**branch name is also changed from <old_remote_shortname>/master to <new_remote_shortname>/master
+
+
+********************************************************************************************************
+
+
+remove remote: $git remote rm <remote_shortname>
+
+
+********************************************************************************************************
+
+
+Tagging: to tage specific points in history as being important, for ex. release points etc.
+
+listing/show tags: git tag       # in alphabetical order
+                      -l 'tag_to_be_search_for.1.*'   # search tag for particular pattern
+
+**lightweighted tag(branch): a pointer to a specific commit. temporary or don't want to keep other information
+
+$git tag <tag_name>
+
+
+**annotated tag: stored as full objects in the Git database. Contain tagger
+name, e-mail, date, tagging message, are checksummed and can be signed and
+verified with GNU Privacy Guard(GPG). Recommanded.
+
+$git tag -a <tag_name> -m 'tag message'
+         -s <tag_name>  #tag is signed with GPG, only if it's available
+         -v <tag_name>  #verify a signed tag

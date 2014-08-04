@@ -1,0 +1,18 @@
+$git clone <url> <local_dir>
+
+
+
+
+
+==========================================================================================================
+$git init
+$git remote add <remote-shortname> <url>
+$git commit
+
+
+
+
+
+** comparison:
+* clone cannot change remote_shortname?
+
