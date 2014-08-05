@@ -13,9 +13,11 @@ install git: $apt-get install git
 
 set up user, email, editor, diff tool ...: 
   $git config --system(or --global or no parameter for just the local) user.name "Jennifer Chang"
-                                                                      user.email jchang@tensorcom
-                                                                      core.editor "gvim(default) -f"
-                                                                      merge.tool meld
+                                                                       user.email jchang@tensorcom
+                                                                       core.editor "gvim(default) -f"
+                                                                       merge.tool meld
+                                                                       remote #if fail, it fails silently without noticing, can use git remote set-url <> <> instead
+
 ** FIXME $git config doesn't work without --global , how to resolve
 
 ========================================================================================================
@@ -173,6 +175,15 @@ redo commit: $git commit --amend  #takes the last "staged(added)" and commit aga
       $git add <forgotten_file>
       $git commit --amend       # the commit editor will fire up and commit message can also be changed
 
+** after $git commit --amend
+         $git remote <remote_shortname> <branch>    
+** ERROR MESSAGE: "Updates were rejected because the tip of your current branch is behind" when trying to push
+** to solve: 
+        $git fetch --all
+        $git reset --hard <remote_shortname (ex.origin)>/<branch_name (ex.master)>
+    or
+        $git push -u <remote_shortname (ex. origin)> <branch_name (ex. master)> -f      #force push, DANGEROUS, will overwrite what's on the branch
+
 
 ========================================================================================================
 
@@ -210,8 +221,17 @@ $git push -u <shortname(ex.origin)> <branch_name(ex.master)>
 ========================================================================================================
 
 
-show remotes: $git remote       # list only the shortnames of each remote handle specified
-                          -v    # expands all shortname(ex. origin), URL to every shortname
+remotes: $git remote       # list only the shortnames of each remote handle specified
+                     -v    # expands all shortname(ex. origin), URL to every shortname
+                     add  <remote_shortname (ex. origin)>  <remote_url>  # add current repository to new remote repository
+                     rm   <remote_shortname (ex. origin)>    # remove existing remote
+                     show <remote_shortname>    #show remote
+                     rename <old_remote_shortname> <new_remote_shortname>   # rename a remote shortname
+**branch name is also changed from <old_remote_shortname>/master to <new_remote_shortname>/master
+                     set-url <remote_shortname> <url>   #setting url for specified remote 
+                     set-url --push <remote_shortname> <url>   #setting url for specified remote, on all "push" (allow to fetching/pulling and pushing on different url)
+
+** possible to have all user fetching/pulling from the same "origin", but push to their own repository branch
 
 
 ========================================================================================================
@@ -237,29 +257,11 @@ pulling from remote: $git pull <remote_shortname>
 ********************************************************************************************************
 
 
-pushing to remote: $git push <remote shortname> <local branch_name>
-ex. cloning generally sets up both names automatically
-  $git push origin master
+pushing to remote: $git push <remote shortname> <local_branch_name>
+                             <remote_shortname> <local_branch_name>:<new_remote_branch_name>    #rename remote branch name
+                             -f <shortname(ex.origin)> <branch_name(ex.master)>    # a "forced push" and overwrites the branch on the server, coould be DANGEROUS when working with a team!
 
-
-********************************************************************************************************
-
-
-inspecting remote: $git remote show <remote_shortname>
-
-
-********************************************************************************************************
-
-
-renaming remote_shortname: $git remote rename <old_remote_shortname> <new_remote_shortname>
-
-**branch name is also changed from <old_remote_shortname>/master to <new_remote_shortname>/master
-
-
-********************************************************************************************************
-
-
-remove remote: $git remote rm <remote_shortname>
+** ex. cloning generally sets up both names automatically $git push origin master
 
 
 ********************************************************************************************************
