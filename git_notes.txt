@@ -33,8 +33,10 @@ start repository:
 
   ==> new repository
   
-  initialize: $git init
+  initialize: $git init           # creates .git folder to start record repository revisions
                         --bare    # FIXME what is a bare???
+                        <directory> 
+                        <directory> --bare
   
   add: 
     $git add  *
@@ -51,7 +53,9 @@ start repository:
   
   ==> checking out from existing repository
   
-  checkout: $git clone https://path[url] <local_directory>
+  checkout: $git clone (--bare) https://path[url] <local_directory>
+
+** if "--bare" is enforced, "$git pull" and "$git push" won't work, (only "$git fetch" work?) because it's not a workspace, persuming it will only be used to copy data from the origin and not commit change from
   
   
 ========================================================================================================
@@ -284,3 +288,7 @@ verified with GNU Privacy Guard(GPG). Recommanded.
 $git tag -a <tag_name> -m 'tag message'
          -s <tag_name>  #tag is signed with GPG, only if it's available
          -v <tag_name>  #verify a signed tag
+
+
+
+** TODO: cherry-pick

@@ -16,3 +16,15 @@ $git commit
 ** comparison:
 * clone cannot change remote_shortname?
 
+==========================================================================================================
+
+**
+Difference between git and svn
+
+svn: central repository to working copy interaction
+ex.
+  checking working copy into SVN's central repository
+
+git: repository to repository interaction (no distinction between working copy and central repository)
+ex.
+  push or pull commits from one repository to another
