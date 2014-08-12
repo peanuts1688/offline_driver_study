@@ -121,9 +121,10 @@ equivalant to : $mv <file_name> <file_rename>
 ========================================================================================================
 
 commit history: $git log
-                         -p
-                         --stat
-                         --oneline
+                         -p             # the full diff of each commit
+                         -n <number_of_logs_to_display>
+                         --stat         # files altered, and relative number of lines added or deleted
+                         --oneline      # for high level overview
                          --<n>
 
                 $git log --pretty=oneline
@@ -132,13 +133,20 @@ commit history: $git log
                          --since=2.weeks
                          --since="2014-07-30"
                          --since="2014-06"
-                         --author <user>
-                         --grep <keyword_in_comments>
+                         --author <user>        # search for particular user
+                         --grep <keyword_in_comments>     # search for keywords in commit messages
                          --all-match <keyword_in_comments>
                 $git log --after="2014-04-29 00:00:00" --before="2014-04-29 23:59:59" \
                 --pretty=fuller
                 $ git log  --after="2013-04-29T17:07:22+0200"      \
                 --before="2013-04-29T17:07:22+0200" --pretty=fuller
+                $git log --graph --decorate --oneline       # --graph:text based graph of the commits, --decorate:show branches or tags
+
+
+ex. $git log --author="John Smith" -p <file>     # will display a full diff of all the changes John Smith has made to the file
+
+** ".." syntax is a very useful tool for comparing branches.
+ex. $git log --oneline master..some-feature      # displays all the comments that are in some-feature that are not in master
 
 
 http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History  
@@ -199,6 +207,10 @@ redo commit: $git commit --amend  #takes the last "staged(added)" and commit aga
 
 
 unstage(reverse of "add") file: $git reset HEAD <file_to_unstage>
+
+** HEAD keyword refers to the current commit, be it a branch or a specific commit
+
+** "~" character is use for relative reference. ex. HEAD~3 meaning the great-grandparent of the current commit
 
 
 ========================================================================================================
