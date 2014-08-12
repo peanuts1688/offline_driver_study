@@ -86,8 +86,8 @@ check in changes(stage): $git add <file>
 ========================================================================================================
 
 stage and commit: $git commit         #editor comes out for user to input commit messages
-                                -m 'commmit everything in the git folder?'
-                                -v () #explicit reminder of what has been modified
+                                -m "message with commit without firing up editor"
+                                -v    #explicit reminder of what has been modified
                                 -a    #this skips the staging(add) step and commit directly
 
 ========================================================================================================

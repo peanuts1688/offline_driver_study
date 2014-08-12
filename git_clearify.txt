@@ -1,17 +1,13 @@
+// TODO
+
 $git clone <url> <local_dir>
-
-
-
-
 
 ==========================================================================================================
 
+// TODO
 $git init
 $git remote add <remote-shortname> <url>
 $git commit
-
-
-
 
 
 ** comparison:
@@ -35,7 +31,7 @@ ex.
 
 Staging:
 
-"git add" STAGES what will go into the next commit, ex. if a group of change  were part of change_A, another group of changes were part of change_B, they can be added seperatedly, result them to be in different commit
+**"git add" STAGES what will go into the next commit, ex. if a group of change  were part of change_A, another group of changes were part of change_B, they can be added seperatedly, result them to be in different commit
 
 ** instead of commiting all the changes made since last commit, stage allow user to group related changes into highly focused snapshots before actually committing to the project history.
 
@@ -44,4 +40,16 @@ Staging:
 
 ==========================================================================================================
 
+Commit:
+
+** git commit is different from svn commit. Staged snapshots are committed to the local repository as a "safe" version, and it requires no interaction with other git repositories (plainly local). Whereas the svn commit merges the local working directory with the central.
+
+** git commits are always a snapshot commited to the local repository, SVN is a working copy commited to a central repository. In a way, git isn't forced to interact with the central repository until the user is ready, each developer's local repository is a buffer between their contributions and the central repository.
+
+** SVN tracks difference of files between working copy and contral. Git
+version control model is based on snapshots. Git records the entire contents
+of each file in every commit. Making Git operation faster than SVN, since svn
+uses a compare.
+
+==========================================================================================================
 
