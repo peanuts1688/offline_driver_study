@@ -216,7 +216,12 @@ unstage(reverse of "add") file: $git reset HEAD <file_to_unstage>
 ========================================================================================================
 
 
-revert change to last commit: $git checkout -- <file>   #discard change since last commit
+revert change to last commit: $git checkout <commit, branch>    # go to a snapshot 
+                                            -- <file>           # discard change since last commit
+                                            <commit> <file>     # discard change since last commit
+                                            HEAD <file>         # check out the most recent version
+
+** Unlike checking out a commit, checkout a file will affect the current state, the checkouted file will show up as a "Change to be committed" in the "$git status"
 
 
 ========================================================================================================

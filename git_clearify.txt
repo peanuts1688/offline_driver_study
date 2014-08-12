@@ -53,3 +53,25 @@ uses a compare.
 
 ==========================================================================================================
 
+Checkout:
+
+** read only operation. The "current state" remain untouched in the master branch, while the HEAD (instead of pointing to master or some working branch), points directly to a previous commit. Called a "detached HEAD".
+
+** To resume developing, one need to first get back to the "current state" of the project (whether it the master or other branches).
+
+ex. 
+  $git log --oneline
+b7119f2 Continue doing crazy things
+872fa7e Try something crazy
+a1e8fb5 Make some important changes to hello.py
+435b61d Create hello.py
+9773e52 Initial import
+
+  $git checkout a1e8fb5
+# Nothing done here will be saved in the repository
+
+  $git checkout master
+# Go back to the current state, can use "$git revert" or "git reset" to undo undesired changes.
+
+** the whole idea of version control system (VCS) is to store "safe" copies of a project. Once the history is built, "$git checkout" is to used to "load" any of the snapshots onto the development machine.
+
