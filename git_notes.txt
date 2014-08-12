@@ -47,7 +47,7 @@ start repository:
                         <directory> 
                         <directory> --bare
   
-  add: 
+  add (staging, aka taking a snap shot):    # can be considered as a buffer between the working directory and the project history
     $git add  *
               *.c
               filename
@@ -55,6 +55,7 @@ start repository:
               -A        # stages all
               .         # stages new and modified, without deleted
               -u        # stages new and modified, without deleted
+              -p        # interaction session for user to choose "portion" of a file to stage (n to ignore the chunk, s to split into smaller chunk, y to stage the chunk, e to manually edit the chunk, q to exit)
   
   
   commit: $git commit -m 'message to put in to commit'
@@ -78,13 +79,9 @@ checking status: $git status
 
 ========================================================================================================
 
-unadd: $git reset HEAD <file>
-
-
-========================================================================================================
-
 check in changes(stage): $git add <file>
 
+** instead of commiting all the changes made since last commit, stage allow user to group related changes into highly focused snapshots before actually committing to the project history.
 
 ========================================================================================================
 
@@ -201,7 +198,7 @@ redo commit: $git commit --amend  #takes the last "staged(added)" and commit aga
 ========================================================================================================
 
 
-unstage file: $git reset HEAD <file_to_unstage>
+unstage(reverse of "add") file: $git reset HEAD <file_to_unstage>
 
 
 ========================================================================================================

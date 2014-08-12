@@ -5,6 +5,7 @@ $git clone <url> <local_dir>
 
 
 ==========================================================================================================
+
 $git init
 $git remote add <remote-shortname> <url>
 $git commit
@@ -28,3 +29,19 @@ ex.
 git: repository to repository interaction (no distinction between working copy and central repository)
 ex.
   push or pull commits from one repository to another, can give any repository special meaning (such as central or origin accomplished through convention rather then hardwired like the svn)
+
+
+==========================================================================================================
+
+Staging:
+
+"git add" STAGES what will go into the next commit, ex. if a group of change  were part of change_A, another group of changes were part of change_B, they can be added seperatedly, result them to be in different commit
+
+** instead of commiting all the changes made since last commit, stage allow user to group related changes into highly focused snapshots before actually committing to the project history.
+
+** git doesn't differentiate between staging changes in new files vs. changes in files that have already been added to the repository
+
+
+==========================================================================================================
+
+
