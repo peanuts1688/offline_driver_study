@@ -15,10 +15,19 @@ set up user, email, editor, diff tool ...:
   $git config --system(or --global or no parameter for just the local) user.name "Jennifer Chang"
                                                                        user.email jchang@tensorcom
                                                                        core.editor "gvim(default) -f"
+                                                                       alias.<alias_name> <git_commands>    # creates shortcut for a git command
                                                                        merge.tool meld
                                                                        remote #if fail, it fails silently without noticing, can use git remote set-url <> <> instead
 
 ** FIXME $git config doesn't work without --global , how to resolve
+
+
+$git config (--global/--system) --edit    # to open the global configuration file in a text editor for manual editing
+
+** git store configuration options in three speacial files:
+1. <repository>/.git/config   # for repository-specific(local) settings
+2. ~/.gitconfig               # for user specific settings. --global 
+3. $(prefix)/etc/gitconfig    # system wide settings --system
 
 ========================================================================================================
 

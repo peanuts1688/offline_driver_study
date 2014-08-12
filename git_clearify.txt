@@ -27,4 +27,4 @@ ex.
 
 git: repository to repository interaction (no distinction between working copy and central repository)
 ex.
-  push or pull commits from one repository to another
+  push or pull commits from one repository to another, can give any repository special meaning (such as central or origin accomplished through convention rather then hardwired like the svn)
