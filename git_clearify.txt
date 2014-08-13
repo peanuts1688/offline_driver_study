@@ -75,3 +75,28 @@ a1e8fb5 Make some important changes to hello.py
 
 ** the whole idea of version control system (VCS) is to store "safe" copies of a project. Once the history is built, "$git checkout" is to used to "load" any of the snapshots onto the development machine.
 
+
+==========================================================================================================
+
+
+Reverting vs. Resetting
+
+** Revert advantages over Resetting: 
+  1. revert doesn't change project history, making it "safer" for commits that have already been published to a shared repository.
+  2. revert can target an individual commit at an arbitary point in the commit history; whereas, "$git reset" can only work backward from the current commit.
+
+** if an older commit in the history is desired, one would have to remove all of the commits that occured after the target commit, remove it, then re-commit all of the subsequent commits.
+
+** if "$git revert" is a "safe" way to undo changes, one can think "$git
+reset" as the dangerous method. When undo with reset, there is no way to
+retrieve the original copy--it's a permanant undo. 
+
+** The ONLY GIT COMMANDS THAT HAS POTENTIAL TO LOSE WORKS. Extra care must be taken. RECOMMENDED TO USE ON LOCAL CHANGES ONLY, should not reset snapshots that have been shared with other developers.
+
+** "$git reset" is a way to clean up a repository by unstaging changes or uncommitting a series of snapshots, the "--hard" flag comes in handy when the working directory has gone horribly wrong and one need a clean slate to work with.
+
+** Whereas "reverting" is designed to safely undo a public commit, "reseting"
+is designed to undo local changes. Because of the distinct goals, two commands
+were implemented differently:
+  resetting: complitely removes a changeset. After publishing a commit, one have to assume that other developers are reliant upon it, and shouldn't reset on it.
+  reverting: maintains the original changeset and uses a new commit to apply the undo.

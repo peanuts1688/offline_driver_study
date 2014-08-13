@@ -199,6 +199,7 @@ redo commit: $git commit --amend  #takes the last "staged(added)" and commit aga
 ** to solve: 
         $git fetch --all
         $git reset --hard <remote_shortname (ex.origin)>/<branch_name (ex.master)>
+** origin/master branch is the central repository's version of one's local master branch
     or
         $git push -u <remote_shortname (ex. origin)> <branch_name (ex. master)> -f      #force push, DANGEROUS, will overwrite what's on the branch
 
@@ -206,7 +207,13 @@ redo commit: $git commit --amend  #takes the last "staged(added)" and commit aga
 ========================================================================================================
 
 
-unstage(reverse of "add") file: $git reset HEAD <file_to_unstage>
+unstage(reverse of "add") file: $git reset                              # reset the staging to last commit, but leave works unchanged as it is.
+                                           (HEAD) <file_to_unstage>     # reset the staging of the file  to last commit, but leave file unchanged as it is.
+                                           <commit>                     # reset the staging of the works tip to <commit>, but leave file unchanged as it is.
+                                           --hard                       # reset to match most recent commit and obliterate all uncommitted changes.
+                                           --hard <commit>              # reset to match staging tip to <commit> and obliterate all changes after <commit>.
+
+ex. $git reset --hard HEAD~2      # reset to previous 2 commits
 
 ** HEAD keyword refers to the current commit, be it a branch or a specific commit
 
@@ -219,7 +226,7 @@ unstage(reverse of "add") file: $git reset HEAD <file_to_unstage>
 revert change to last commit: $git checkout <commit, branch>    # go to a snapshot 
                                             -- <file>           # discard change since last commit
                                             <commit> <file>     # discard change since last commit
-                                            HEAD <file>         # check out the most recent version
+                                            HEAD <file>         # check out the most recent committed version
 
 ** Unlike checking out a commit, checkout a file will affect the current state, the checkouted file will show up as a "Change to be committed" in the "$git status"
 
@@ -272,7 +279,7 @@ that server since you cloned (or last fetched from) it. It's important to note
 that the fetch command pulls the data to your local repository — it doesns't automatically merge it with any of your work or modify what you're currently working on. You have to merge it manually into your work when you're ready.
 
 
-********************************************************************************************************
+========================================================================================================
 
 
 pulling from remote: $git pull <remote_shortname>   
@@ -281,7 +288,7 @@ pulling from remote: $git pull <remote_shortname>
 **PULL = FETCH + merge
 
 
-********************************************************************************************************
+========================================================================================================
 
 
 pushing to remote: $git push <remote shortname> <local_branch_name>
@@ -291,7 +298,7 @@ pushing to remote: $git push <remote shortname> <local_branch_name>
 ** ex. cloning generally sets up both names automatically $git push origin master
 
 
-********************************************************************************************************
+========================================================================================================
 
 
 Tagging: to tage specific points in history as being important, for ex. release points etc.
@@ -312,6 +319,36 @@ $git tag -a <tag_name> -m 'tag message'
          -s <tag_name>  #tag is signed with GPG, only if it's available
          -v <tag_name>  #verify a signed tag
 
+
+========================================================================================================
+
+
+Revert:
+
+$git revert <commit>      # generate a new commit that undoes all of the changes introduced in the current branch.
+
+** Used when an entire commit from project history needs to be removed.
+
+** "$git revert" undoes a "single commit", but does not revert back to the previous state of a project by removing all subsequent commits.
+
+** instead of deleting the reverted commit, git adds a new commit to undo its changes. As a result, there will exist two exact same code base (the commit in history and the new commit). 
+
+
+========================================================================================================
+
+clean: 
+
+$git clean -f         # -f flag is required unless clean.requireForece is set to false(true by default). WILL NOT REMOVE UNTRACKED FOLDERS OR FILES SPECIFIED BY .gitignore
+           -n         # a dry run, will only show which files were to be removed without actually doing it.
+           -f <path>  # limit operation to the specified path
+           -df        # remove untracked files and untracked directories from current directory
+           -xf        # remove untracked files as well as any files that GIT usually ignores from current directory
+
+
+** often executed in conjunction with "$git reset --hard". Resetting only affects tracked files, so a seperate command is required for cleaning up untracked ones. Combining the reset and clean, one can return the working directory to the exact state of a particular commit.
+
+
+========================================================================================================
 
 
 ** TODO: cherry-pick
