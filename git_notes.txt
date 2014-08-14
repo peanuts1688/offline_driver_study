@@ -323,7 +323,7 @@ $git tag -a <tag_name> -m 'tag message'
 ========================================================================================================
 
 
-Revert:
+revert:
 
 $git revert <commit>      # generate a new commit that undoes all of the changes introduced in the current branch.
 
@@ -350,5 +350,22 @@ $git clean -f         # -f flag is required unless clean.requireForece is set to
 
 ========================================================================================================
 
+branches:
+
+
+** creating branch is like requesting a new project history.
+
+$git branch                        # list all of the branches in the current repository
+             <branch_name>         # create a new branch called <branch_name>
+             -d <branch_name>      # delete <branch_name>, "safe" in a way that it prevents deletion of any unmerged changes
+             -D <branch_name>      # force delete <branch_name>, used when all commits associated with a particular line of development is wished to be thrown away 
+             -m <branch_rename>    # rename the current branch to <branch_rename>
+
+
+ex. $git branch experiment_branch
+    $git checkout
+    $git add
+
+========================================================================================================
 
 ** TODO: cherry-pick
