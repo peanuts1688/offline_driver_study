@@ -1,10 +1,6 @@
 // TODO
 
-// TODO
-
-
-** how to track different pushes(check-in) from several different locals on the same remote ??
-
+$git clone <url> <local_dir>
 
 ==========================================================================================================
 
