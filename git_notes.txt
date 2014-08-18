@@ -284,6 +284,11 @@ that the fetch command pulls the data to your local repository — it doesns't aut
 ========================================================================================================
 
 
+merge: $git merge <branch>
+
+========================================================================================================
+
+
 pulling from remote: $git pull <remote_shortname>   
 
 ** $git pull <remote_shortname> <branch> ??

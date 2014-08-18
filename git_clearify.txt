@@ -4,6 +4,12 @@
 ** different local pushes on a remote ??
 
 ==========================================================================================================
+// TODO
+
+** how is branch and working copy(physical directories) different?
+** when "$git checkout <branch>", the the actuall directory still have files from the other branch?
+
+==========================================================================================================
 // TODO WHAT CAUSES THIS??!
 
 ** ERROR MESSAGE: "Updates were rejected because the tip of your current branch is behind" when trying to push
