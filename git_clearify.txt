@@ -8,6 +8,12 @@
 
 ** ERROR MESSAGE: "Updates were rejected because the tip of your current branch is behind" when trying to push
 
+** Another situation where you might run into this, is if you’re tracking a branch that is not the same name as the remote. For instance, say you have a remote branch called otherrepo/master and you already have a local master branch, so you checkout the otherrepo/master branch as othermaster locally. Now even though you do a pull, when you go to push, you will get the rejected error.
+
+To get around this, you will have to specify the local branch in the push command using a colon (:) like so:
+
+$git push otherrepo othermaster:master
+
 ==========================================================================================================
 // TODO $git fetch vs. $git pull
 
