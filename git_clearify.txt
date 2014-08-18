@@ -1,6 +1,7 @@
 // TODO
 
-$git clone <url> <local_dir>
+** track remote repository of different local pushes(check-in) ??
+** different local pushes on a remote ??
 
 ==========================================================================================================
 
