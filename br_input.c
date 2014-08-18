@@ -134,6 +134,7 @@ static inline int is_link_local(const unsigned char *dest)
  * Called via br_handle_frame_hook.
  * Return NULL if skb is handled
  * note: already called with rcu_read_lock (preempt_disabled)
+ * jchang note: entry point to the bridge implementation, all packets received by a Linux bridge travel through this function. Invoked by the NET_RX tasklet in the function net_rx_action(), if the bridge is activated in kernel.
  */
 struct sk_buff *br_handle_frame(struct net_bridge_port *p, struct sk_buff *skb)
 {
@@ -164,26 +165,27 @@ struct sk_buff *br_handle_frame(struct net_bridge_port *p, struct sk_buff *skb)
 	}
 
 forward:
-	switch (p->state) {
-	case BR_STATE_FORWARDING:
-		rhook = rcu_dereference(br_should_route_hook);
-		if (rhook != NULL) {
-			if (rhook(skb))
-				return skb;
-			dest = eth_hdr(skb)->h_dest;
-		}
-		/* fall through */
-	case BR_STATE_LEARNING:
-		if (!compare_ether_addr(p->br->dev->dev_addr, dest))
-			skb->pkt_type = PACKET_HOST;
+	switch (p->state) 
+  {
+    case BR_STATE_FORWARDING:   // uses a forwarding table to seperate traffic between LAN and within LAN
+      rhook = rcu_dereference(br_should_route_hook);
+      if (rhook != NULL) 
+      {
+        if (rhook(skb))
+          return skb;
+        dest = eth_hdr(skb)->h_dest;
+      }
+      /* fall through */
+    case BR_STATE_LEARNING:     // maintaining forwarding table
+      if (!compare_ether_addr(p->br->dev->dev_addr, dest))
+        skb->pkt_type = PACKET_HOST;
 
-		NF_HOOK(NFPROTO_BRIDGE, NF_BR_PRE_ROUTING, skb, skb->dev, NULL,
-			br_handle_frame_finish);
-		break;
-	default:
+      NF_HOOK(NFPROTO_BRIDGE, NF_BR_PRE_ROUTING, skb, skb->dev, NULL,
+          br_handle_frame_finish);
+      break;
+    default:
 drop:
-		kfree_skb(skb);
-	}
-	return NULL;
+      kfree_skb(skb);
+  }
+  return NULL;
 }
-Status API Training Shop Blog About © 2014 GitHub, Inc. Terms Privacy Security Contact 
