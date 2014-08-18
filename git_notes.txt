@@ -100,6 +100,8 @@ ignoring files: $cat .gitignore
 unadded changes: $git diff
 added changes: $git diff --cached
 
+diff with tool: $git difftool 
+
 
 ========================================================================================================
 
@@ -285,6 +287,9 @@ that the fetch command pulls the data to your local repository — it doesns't aut
 
 
 merge: $git merge <branch>
+
+
+use merge tool: $git mergetool
 
 ========================================================================================================
 
