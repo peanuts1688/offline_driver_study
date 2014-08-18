@@ -174,7 +174,7 @@ struct sk_buff *br_handle_frame(struct net_bridge_port *p, struct sk_buff *skb)
 		if (p->br->stp_enabled == BR_NO_STP && dest[5] == 0)
 			goto forward;
 
-		if (NF_HOOK(NFPROTO_BRIDGE, NF_BR_LOCAL_IN, skb, skb->dev,
+		if (NF_HOOK(NFPROTO_BRIDGE, NF_BR_LOCAL_IN, skb, skb->dev,      /* jchang: p->br->stp_enabled = 1 (spaning tree protocol)*/
 			    NULL, br_handle_local_finish))
 			return NULL;	/* frame consumed by filter */
 		else
