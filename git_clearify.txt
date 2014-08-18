@@ -4,6 +4,16 @@
 ** different local pushes on a remote ??
 
 ==========================================================================================================
+// TODO WHAT CAUSES THIS??!
+
+** ERROR MESSAGE: "Updates were rejected because the tip of your current branch is behind" when trying to push
+
+==========================================================================================================
+// TODO $git fetch vs. $git pull
+
+** where does the result of fetch go if files were not merged??!
+
+==========================================================================================================
 
 // TODO
 $git init

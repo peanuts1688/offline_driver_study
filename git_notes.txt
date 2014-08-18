@@ -272,6 +272,9 @@ remotes: $git remote       # list only the shortnames of each remote handle spec
 
 fetching from remote: $git fetch <remote_shortname>
 
+
+** $git fetch <remote_shortname> <branch> ???
+
 **If you clone a repository, the command automatically adds that remote repository under the name origin if no remote_shortname specified. "$git fetch
 <remote_shortname (ex.origin)> fetches any new work that has been pushed to
 that server since you cloned (or last fetched from) it. It's important to note
@@ -282,6 +285,8 @@ that the fetch command pulls the data to your local repository — it doesns't aut
 
 
 pulling from remote: $git pull <remote_shortname>   
+
+** $git pull <remote_shortname> <branch> ??
 
 **Running git pull generally fetches data from the server you originally cloned from and automatically tries to merge it into the code you're currently working on. 
 **PULL = FETCH + merge
