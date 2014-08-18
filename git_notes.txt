@@ -241,8 +241,7 @@ $git init             # to initialize an empty repository in "current directory"
 $git add README.md    # add file to current directory's repository on LOCAL COMPUTER
 $git commit -m "first commit"     # commit to repository on LOCAL COMPUTER
 $git remote add <shortname(ex.origin> https://github.com/peanuts1688/<new_repository>.git    #adds a new REMOTE repository (regardless of the current directory on local computer)
-**the word "origin" is used to indicate that it's the central Repo everyone is
-branching from, each person have it own repository, and they all branch from the "origin" refer to https://www.atlassian.com/git/tutorial/remote-repositories#!remote
+**the word "origin" is used to indicate that it's the central Repo everyone is branching from, each person have it own repository, and they all branch from the "origin" refer to https://www.atlassian.com/git/tutorial/remote-repositories#!remote
 
 $git push -u <shortname(ex.origin)> <branch_name(ex.master)>    # pushes from LOCAL COMPUTER repository to REMOTE repository(there are two repositories, one on LOCAL COMPUTER the other on REMOTE site)
 
