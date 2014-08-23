@@ -190,10 +190,16 @@ http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History
 ========================================================================================================
 
 
-redo commit: $git commit --amend  #takes the last "staged(added)" and commit again if no changes made between the time --amend and previous commit, commit message can be edit 
+redo commit: $git commit --amend  #takes the "staged(added)" and commit again if no changes made between the time --amend and previous commit, commit message can be edit 
+
+** combining the current "staged" with privious commit as a same commit, if no "staging" occurs since the last commits, --amend allow commit message changes.
+
   ex: $git commit -m 'initial commit'
       $git add <forgotten_file>
-      $git commit --amend       # the commit editor will fire up and commit message can also be changed
+      $git commit --amend (--no-edit)      # the commit editor will fire up and commit message can also be changed
+
+** like "$git reset" , --amend should not be done on public repository. --amend commits are actually entirely new commits, and the previous commits is removed from the project history.
+
 
 ** after $git commit --amend
          $git remote <remote_shortname> <branch>    
@@ -379,6 +385,36 @@ $git branch                        # list all of the branches in the current rep
 ex. $git branch experiment_branch
     $git checkout
     $git add
+
+========================================================================================================
+
+rebase:   ** moving a branch from one commit to another
+
+** internally, new commits are created and applied to the specific base, a rewriting of project history.
+
+$git rebase <base(branch/commit_ID/tag/HEAD~n)>
+
+** primary reason for rebasing is to maintain a linear project history. A situation where the master branch has progressed since the last a feature_branch has started devloping. Two options to integrate are 1)merging directly, and 2)rebase+merging. Option 1 result in a 3 way merge and merge commit, option 2 result in a fast-forward merge and a linear history.
+
+** should never rebase commits that have been pushed to a public repository.
+
+$git rebase -i <base>       # rebase using an interactive rebasing session
+
+** opens an editor for each commands to be rebased, determine how individual commits will be transferred to the new base.
+
+** interactive rebasing allow user to go back and clean up afterwards, developers likes to repolish a feature branch before merging it into the main code base.
+
+========================================================================================================
+
+reflog(reference log?): 
+
+$git reflog                     # show the reflog for the local repository
+             --relative-date    # show reflog with relative date information
+
+
+** everytime the current HEAD gets updated(switching branches, pulling in changes, rewritting history, adding new commmits...) a new entry will be added to the reflog
+
+** reflog only provides a safety net if changes have been commited to local repository and that it only tracks movements.
 
 ========================================================================================================
 
