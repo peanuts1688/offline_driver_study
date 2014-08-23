@@ -1,3 +1,12 @@
+// TODO 
+
+** what does it mean by --bare repository does not have a working directory???
+
+==========================================================================================================
+// TODO tag vs. branch
+
+
+==========================================================================================================
 // TODO
 
 ** track remote repository of different local pushes(check-in) ??
@@ -21,9 +30,12 @@ To get around this, you will have to specify the local branch in the push comman
 $git push otherrepo othermaster:master
 
 ==========================================================================================================
-// TODO $git fetch vs. $git pull
+
+$git fetch vs. $git pull
 
 ** where does the result of fetch go if files were not merged??!
+
+** fetches contents are represented as a remote branch, it haas absolutely no effect on local development work 
 
 ==========================================================================================================
 

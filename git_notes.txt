@@ -18,6 +18,7 @@ set up user, email, editor, diff tool ...:
                                                                        alias.<alias_name> <git_commands>    # creates shortcut for a git command
                                                                        merge.tool meld
                                                                        remote #if fail, it fails silently without noticing, can use git remote set-url <> <> instead
+                                                                       branch.autosetuprebase always # "$git pull" command will integrate via "$git rebase" instead of "$git merge"
 
 ** FIXME $git config doesn't work without --global , how to resolve
 
@@ -275,13 +276,19 @@ remotes: $git remote       # list only the shortnames of each remote handle spec
 ** possible to have all user fetching/pulling from the same "origin", but push to their own repository branch
 
 
+remote branches: (can be viewed as read-only branches)
+
+$git branch -r        # show remote branches
+
+** remote branches represent commits from somebody else's repository. Remote
+branches can be check out just like a local, but put user in a detached HEAD (like chekcing out old commits)
+
+
 ========================================================================================================
 
 
 fetching from remote: $git fetch <remote_shortname>
-
-
-** $git fetch <remote_shortname> <branch> ???
+                                                     <branch_desired_on_remote>       # only fetching the specified branch from remote
 
 **If you clone a repository, the command automatically adds that remote repository under the name origin if no remote_shortname specified. "$git fetch
 <remote_shortname (ex.origin)> fetches any new work that has been pushed to
@@ -289,6 +296,13 @@ that server since you cloned (or last fetched from) it. It's important to note
 that the fetch command pulls the data to your local repository — it doesns't automatically merge it with any of your work or modify what you're currently working on. You have to merge it manually into your work when you're ready.
 
 
+ex.
+  $git checkout master                  # swtich to local master branch
+  $git fetch origin master              # update with remote/master(origin)
+  $git rebase -i  origin/master         # rebase local master with remote/master(origin)
+  $git push origin master               # push local master to remote/master(origin)
+
+** since we already made sure the local master was up-to-date, this should result in a fast-forward-merge, and "$git push" should not complain.
 ========================================================================================================
 
 
@@ -307,13 +321,35 @@ pulling from remote: $git pull <remote_shortname>
 **Running git pull generally fetches data from the server you originally cloned from and automatically tries to merge it into the code you're currently working on. 
 **PULL = FETCH + merge
 
+$git pull --rebase <remote_shortname>     # instead of using "$git merge" after "$git fetch" to integrate the remote branch with local, use "$git rebase" instead
+
+ex.
+  $git checkout master              # switch back to local master branch
+  #git pull --rebase origin         # rebase off remote origin/master
+
+
+
+** the --rebase option can be used to ensure a linear history by preventing unnecessary merge commits. Many developer prefer rebasing over merging, since it's like saying "I want to put my changes on top of what everybody else has done", in this sense, "$git pull --rebase" is more like a svn update
+
 
 ========================================================================================================
 
 
-pushing to remote: $git push <remote shortname> <local_branch_name>
+pushing to remote: $git push <remote_shortname> <local_branch_name>
                              <remote_shortname> <local_branch_name>:<new_remote_branch_name>    #rename remote branch name
                              -f <shortname(ex.origin)> <branch_name(ex.master)>    # a "forced push" and overwrites the branch on the server, coould be DANGEROUS when working with a team!
+
+
+$git push <remote_shortname> --force      # same as "-f"
+$git push <remote_shortname> --all        # push all local branches to the specified remote
+$git push <remote_shortname> --tags       # tags are usually not pushed when using "--all" option, the "--tag" sends all local tags to the remote repository
+
+
+** the --force(--f) flag overrides the prevent of non-fast-forward and makes the remote repository's branch match the local one, DELETING any upstream changes that may have occured since the last pull. The only time one should ever need to force push is when one realize that the commits that was just shared were not quite right and need to be fixed with a "$git commit --amend" or an interactive rebase. However, one must be absolutely certain that none of the others working on the same branch have pulled the commits before using the --force(-f) option.
+
+
+** in addition, push should only made to repositories that had been created with --bare, since pushing messes with the remote branch structure. It's important to not push to another developer's repository. But because --bare repos don't have a working directory, it's impossible to interrupt anybody's development.
+
 
 ** ex. cloning generally sets up both names automatically $git push origin master
 
