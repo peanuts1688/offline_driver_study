@@ -15,6 +15,7 @@ set up user, email, editor, diff tool ...:
   $git config --system(or --global or no parameter for just the local) user.name "Jennifer Chang"
                                                                        user.email jchang@tensorcom
                                                                        core.editor "gvim(default) -f"
+                                                                       core.excludesfile ~/.gitignore_global      # creating global .gitignore
                                                                        alias.<alias_name> <git_commands>    # creates shortcut for a git command
                                                                        merge.tool meld
                                                                        remote #if fail, it fails silently without noticing, can use git remote set-url <> <> instead
@@ -93,7 +94,26 @@ stage and commit: $git commit         #editor comes out for user to input commit
 
 ========================================================================================================
 
+$touch .gitignore       # to create .ignore files
 ignoring files: $cat .gitignore
+
+
+$git config --global core.excludesfile ~/.gitignore_global      # creating global .gitignore
+
+
+** if don't want to create a .gitignore file to share with others, can create
+rules that are not commited with the repository.
+
+  $gvim .git/info/exclude
+
+
+** ignore "versioned" files: some files in a repository changes often but are rarely committed. Usually these are various local configuration files that are edited, but should never be committed upstream. Git lets you ignore those files by assuming they are unchanges.
+
+  ignore:
+  $git update-index --asume-unchanged path/to/file.*
+
+  track ignored file:
+  $git update-index --no-assume-unchanged path/to/file.*
 
 
 ========================================================================================================
