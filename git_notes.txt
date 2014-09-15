@@ -1,5 +1,22 @@
 Git basics: anything that is committed in Git can almost always be recovered. Even commits that were on branches that were deleted or commits that were overwritten with an --amend commit can be recovered (see Chapter 9 for data recovery). However, anything you lose that was never committed is likely never to be seen again.
 
+** @KentBeck: finally figuring out that git commands are strangely named graph manipulation commands--creating/deleting nodes, moving pointers around.
+
+** Most Git's power comes from the way it looks at the world. (computer scientists see the world)
+
+** git repository is a graph, every git commit is a node. Nodes can point toother nodes that came before them. Most commits point to one parrent commit, merge commits point to two (or more!) parent commits.
+
+** gits operations do two things: 1) make nodes (build commits) 2) move labels (from one commit to another)
+
+** A git commit is a node in a graph, and nodes can point to other nodes that came before them.
+
+** Cheap branching: a local branch reference contains 40-byte identifier of the commit that the reference points to. The entire file is 40 byte.
+
+** local branch reference  : commit, merge, rebase, reset
+   remote branch reference : fetch, push
+   tag reference           : tag
+
+** REFERENCE MAKE COMMITS REACHABLE, ($git gc), starting from every branch and every tag, git walks back through the graph, building a list of every commit it can reach, Once it's reached the end of every path, it deletes all the commits it didn't visit.
 
 ========================================================================================================
 
@@ -150,7 +167,7 @@ commit history: $git log
                          --oneline      # for high level overview
                          --<n>
 
-                $git log --pretty=oneline
+                $git log --pretty=oneline     # the same as plain "--oneline"
                          --pretty=format:"%h - %an, %ar : %s"   #let user define what to output
                          --pretty=format:"%h %s" --graph
                          --since=2.weeks
@@ -164,6 +181,8 @@ commit history: $git log
                 $ git log  --after="2013-04-29T17:07:22+0200"      \
                 --before="2013-04-29T17:07:22+0200" --pretty=fuller
                 $git log --graph --decorate --oneline       # --graph:text based graph of the commits, --decorate:show branches or tags
+          ex.
+                $git log --oneline --abbrev-commit --branches=* --graph --decorate      
 
 
 ex. $git log --author="John Smith" -p <file>     # will display a full diff of all the changes John Smith has made to the file
@@ -200,6 +219,8 @@ http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History
 --graph	        Display an ASCII graph of the branch and merge history beside the log output.
 --pretty      	Show commits in an alternate format. Options include oneline, short, full, fuller, and format (where you specify your own format).
 --oneline	      A convenience option short for --pretty=oneline --abbrev-commit.
+--color         Display in color.
+--decorate      Display tags.
 
 -(n)	            Show only the last n commits
 --since, --after	Limit the commits to those whose CommitDate was made on-or-after the specified date/time.
@@ -327,7 +348,8 @@ ex.
 
 
 merge: $git merge <branch>
-
+                  --no-ff <branch>      # causes the merge to always create a new commit object, even if the merge could be performed with a fast-forward.
+                                        ** This avoids losing information about the historical existence of a feature branch and groups together all commits that together added the feature.
 
 use merge tool: $git mergetool
 
@@ -387,9 +409,7 @@ listing/show tags: git tag       # in alphabetical order
 $git tag <tag_name>
 
 
-**annotated tag: stored as full objects in the Git database. Contain tagger
-name, e-mail, date, tagging message, are checksummed and can be signed and
-verified with GNU Privacy Guard(GPG). Recommanded.
+**annotated tag: stored as full objects in the Git database. Contain tagger name, e-mail, date, tagging message, are checksummed and can be signed and verified with GNU Privacy Guard(GPG). Recommanded.
 
 $git tag -a <tag_name> -m 'tag message'
          -s <tag_name>  #tag is signed with GPG, only if it's available

@@ -3,8 +3,14 @@
 ** what does it mean by --bare repository does not have a working directory???
 
 ==========================================================================================================
-// TODO tag vs. branch
+tag vs. branch
 
+** tags   : symbolic names for a given revision. (making sense out of commit identifiers --usually some odd reference codes)
+   -->  tagging is on commits!!
+   -->  tags are basically like branch references that never move. Once a tag is created, unless a '--force' is used, it will never change.
+        --> makes them useful for marking specific versions
+
+** branch : symbolic names for line of development.
 
 ==========================================================================================================
 // TODO
